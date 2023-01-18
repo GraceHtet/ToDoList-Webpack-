@@ -1,4 +1,3 @@
-import 'lodash';
 import './style.css';
 import square from './assets/img/square.svg';
 import moreDots from './assets/img/more-vertical.svg';
