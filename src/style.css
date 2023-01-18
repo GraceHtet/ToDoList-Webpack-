@@ -22,7 +22,7 @@ body {
 section {
   width: 25%;
   height: auto;
-  box-shadow: 0px 0px 10px #a1a1a1;
+  box-shadow: 0 0 10px #a1a1a1;
 }
 
 div {
@@ -92,7 +92,7 @@ input:focus {
 
 .clear {
   background-color: rgb(15, 16, 20);
-  color: #ffffff;
+  color: #fff;
   font-size: 14px;
   border: none;
   padding: 4%;
