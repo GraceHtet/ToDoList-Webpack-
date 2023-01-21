@@ -25,7 +25,7 @@ export default class Lists {
       const checkBox = document.createElement('img');
       checkBox.src = './assets/img/square.svg';
       checkBox.classList = 'check-box';
-      checkBox.setAttribute('data-completed', !!tdlist.completed);
+      checkBox.setAttribute('data-completed', tdlist.completed);
       checkBox.alt = 'square';
 
       const todoText = document.createElement('input');
