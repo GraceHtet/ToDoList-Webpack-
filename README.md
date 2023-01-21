@@ -102,7 +102,7 @@ After you're finished please remove all the comments and instructions!
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- [Live Demo Link]()
+- [Live Demo Link](https://gracehtet.github.io/ToDoList-Webpack-/dist/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -127,7 +127,7 @@ Example command:
 
 Clone this repository to your desired folder:
 
-https://github.com/GraceHtet/AwesomeBooks.git
+https://github.com/GraceHtet/ToDoList-Webpack-.git
 
 and you are ready to use it. You don't need to install anything or setup anything.
 Good luck!
