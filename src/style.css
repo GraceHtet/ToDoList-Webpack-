@@ -11,6 +11,7 @@
 }
 
 body {
+  /* background-color: ; */
   width: 100%;
   height: 100vh;
   font-weight: 500;
@@ -49,6 +50,10 @@ input:focus {
   outline: none;
 }
 
+.todo-input {
+  width: 94%;
+}
+
 .todo-list {
   border: none;
   padding: 0;
@@ -63,7 +68,7 @@ input:focus {
   font-size: 14px;
   display: grid;
   grid-template-columns: 10% 82% 8%;
-  padding-right: 0;
+  padding-right: 2%;
 }
 
 .check-box {
@@ -84,17 +89,23 @@ input:focus {
   font-weight: inherit;
 }
 
-.more {
+.todo-text.checked {
+  color: #a1a1a1;
+  text-decoration: line-through;
+}
+
+.more,
+.bin {
   grid-column: 3;
-  text-align: right;
   cursor: all-scroll;
 }
 
 .clear {
-  background-color: rgb(15, 16, 20);
+  width: 100%;
+  background-color: #4a342d;
   color: #fff;
   font-size: 14px;
   border: none;
-  padding: 4%;
+  padding: 5%;
   justify-content: center;
 }
