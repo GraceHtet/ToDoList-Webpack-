@@ -89,6 +89,11 @@ input:focus {
   font-weight: inherit;
 }
 
+.todo-text.checked {
+  color: #a1a1a1;
+  text-decoration: line-through;
+}
+
 .more,
 .bin {
   grid-column: 3;
@@ -96,10 +101,11 @@ input:focus {
 }
 
 .clear {
+  width: 100%;
   background-color: #4a342d;
   color: #fff;
   font-size: 14px;
   border: none;
-  padding: 4%;
+  padding: 5%;
   justify-content: center;
 }

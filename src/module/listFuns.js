@@ -25,6 +25,7 @@ export default class Lists {
       const checkBox = document.createElement('img');
       checkBox.src = './assets/img/square.svg';
       checkBox.classList = 'check-box';
+      checkBox.setAttribute('data-completed', tdlist.completed);
       checkBox.alt = 'square';
 
       const todoText = document.createElement('input');
@@ -57,5 +58,30 @@ export default class Lists {
     this.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
     this.tdlists[idx].description = val;
     localStorage.setItem('tdlists', JSON.stringify(this.tdlists));
+    this.showList();
+  }
+
+  check(item, idx) {
+    this.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
+    this.tdlists[idx].completed = true;
+    item.dataset.completed = this.tdlists[idx].completed;
+    localStorage.setItem('tdlists', JSON.stringify(this.tdlists));
+  }
+
+  uncheck(item, idx) {
+    this.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
+    this.tdlists[idx].completed = false;
+    item.dataset.completed = this.tdlists[idx].completed;
+    localStorage.setItem('tdlists', JSON.stringify(this.tdlists));
+  }
+
+  clearCompleted() {
+    this.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
+    this.tdlists = this.tdlists.filter((tdlist) => tdlist.completed === false);
+    this.tdlists.forEach((tdlist, tdnum) => {
+      tdlist.index = tdnum + 1;
+    });
+    localStorage.setItem('tdlists', JSON.stringify(this.tdlists));
+    this.showList();
   }
 }
