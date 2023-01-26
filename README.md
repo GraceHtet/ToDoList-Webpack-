@@ -24,7 +24,7 @@ After you're finished please remove all the comments and instructions!
   <!-- <img src="murple_logo.png" alt="logo" width="140"  height="auto" />
   <br/> -->
 
-  <h3><b>Awesome Books README</b></h3>
+  <h3><b>ToDo List README</b></h3>
 
 </div>
 
@@ -143,6 +143,10 @@ Good luck!
 - GitHub: [@githubhandle](https://github.com/GraceHtet)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/thiri-htet-418047204/)
 
+👤 **Marko Kermichiev**
+
+- GitHub: [@githubhandle](https://github.com/MarkoKermi)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->
@@ -151,9 +155,8 @@ Good luck!
 
 <!-- > Describe 1 - 3 features you will add to the project. -->
 
-- [ ] **[Add blogs and book reviews]**
-  <!-- - [ ] **[Rewrite to use JavaScript classes]** -->
-  <!-- - [ ] **[Navigation]** -->
+- [ ] **[Add drag and drop function]**
+- [ ] **[Update UI/UX Design]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

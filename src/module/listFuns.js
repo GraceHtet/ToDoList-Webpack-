@@ -1,25 +1,22 @@
-const todoEl = document.querySelector('.todo-list');
-
 export default class Lists {
+  /* eslint-disable class-methods-use-this */
   constructor() {
     this.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
   }
 
-  delList(item, idx) {
-    this.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
-    const tdIdx = this.tdlists[idx].index;
-    this.tdlists.splice(tdIdx - 1, 1);
-    this.tdlists.forEach((tdlist, tdnum) => {
+  delList(idx, lis) {
+    const tdIdx = lis[idx].index;
+    lis.splice(tdIdx - 1, 1);
+    lis.forEach((tdlist, tdnum) => {
       tdlist.index = tdnum + 1;
     });
 
-    localStorage.setItem('tdlists', JSON.stringify(this.tdlists));
-    this.showList();
+    localStorage.setItem('tdlists', JSON.stringify(lis));
   }
 
-  showList() {
-    todoEl.innerHTML = '';
-    this.tdlists.forEach((tdlist) => {
+  showList(lis, els) {
+    els.innerHTML = '';
+    lis.forEach((tdlist) => {
       const lists = document.createElement('div');
       lists.classList = 'lists';
       const checkBox = document.createElement('img');
@@ -41,7 +38,7 @@ export default class Lists {
       more.alt = 'more-vertical';
 
       lists.append(checkBox, todoText, more);
-      todoEl.appendChild(lists);
+      els.appendChild(lists);
     });
   }
 
@@ -82,6 +79,5 @@ export default class Lists {
       tdlist.index = tdnum + 1;
     });
     localStorage.setItem('tdlists', JSON.stringify(this.tdlists));
-    this.showList();
   }
 }

@@ -18,6 +18,8 @@ const textnormal = (item) => {
 };
 
 const removeTodo = () => {
+  listFuns.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
+  const lis = listFuns.tdlists;
   todoEl.addEventListener('click', (e) => {
     e.preventDefault();
     const cur = e.target;
@@ -35,7 +37,8 @@ const removeTodo = () => {
         curPrev.disabled = true;
       }
     } else if (cur.className.includes('bin')) {
-      listFuns.delList(curlist, curIdx);
+      listFuns.delList(curIdx, lis);
+      listFuns.showList(lis, todoEl);
     }
 
     if (curlist.lastElementChild.className === 'bin') {
@@ -109,11 +112,12 @@ todoEl.addEventListener('click', (e) => {
 const todoInput = document.querySelector('.todo-input');
 
 const submitTodo = () => {
+  const lis = listFuns.tdlists;
   todoInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === 'Tab') {
       listFuns.storeLocal(todoInput.value);
       todoInput.value = '';
-      listFuns.showList();
+      listFuns.showList(lis, todoEl);
     }
     displaycheck();
     editTodo();
@@ -121,7 +125,8 @@ const submitTodo = () => {
 };
 
 window.addEventListener('load', () => {
-  listFuns.showList();
+  const lis = listFuns.tdlists;
+  listFuns.showList(lis, todoEl);
   submitTodo();
   editTodo();
   displaycheck();
@@ -132,4 +137,6 @@ const clearBtn = document.querySelector('.clear');
 
 clearBtn.addEventListener('click', () => {
   listFuns.clearCompleted();
+  const lis = listFuns.tdlists;
+  listFuns.showList(lis, todoEl);
 });
