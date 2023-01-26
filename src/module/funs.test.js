@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import Lists from './listFuns.js';
+import Lists from "./listFuns.js";
 
 const listFuns = new Lists();
 
@@ -27,19 +27,26 @@ document.body.innerHTML = `
       <button class="clear">Clear All Completed</button>
     </section>`;
 
-const todoEl = document.querySelector('.todo-list');
+const todoEl = document.querySelector(".todo-list");
 const tasks = [
   {
-    description: 'task1',
+    description: "task1",
     completed: false,
     index: 1,
   },
 ];
 
-describe('Test', () => {
-  test('Add one item to the list', () => {
+describe("Test", () => {
+  test("Add one item to the list", () => {
     listFuns.showList(tasks, todoEl);
-    const li = todoEl.querySelectorAll('.lists');
+    const li = todoEl.querySelectorAll(".lists");
     expect(li).toHaveLength(1);
+  });
+
+  test("Remove one item to the list", () => {
+    listFuns.delList(0, tasks);
+    listFuns.showList(tasks, todoEl);
+    const li = todoEl.querySelectorAll(".lists");
+    expect(li).toHaveLength(0);
   });
 });
