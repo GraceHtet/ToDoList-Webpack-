@@ -17,49 +17,46 @@ const textnormal = (item) => {
   item.disabled = true;
 };
 
-const removeTodo = () => {
+todoEl.addEventListener('click', (e) => {
   listFuns.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
   const lis = listFuns.tdlists;
-  todoEl.addEventListener('click', (e) => {
-    e.preventDefault();
-    const cur = e.target;
-    const curPrev = cur.previousElementSibling;
-    const curlist = cur.parentElement;
-    const curIdx = Array.from(todoEl.childNodes).indexOf(curlist);
+  e.preventDefault();
+  const cur = e.target;
+  const curPrev = cur.previousElementSibling;
+  const curlist = cur.parentElement;
+  const curIdx = Array.from(todoEl.childNodes).indexOf(curlist);
 
-    if (cur.className.includes('more')) {
-      curlist.style.background = '#F8EDE3';
-      cur.src = './assets/img/bin.svg';
-      cur.className = 'bin';
-      if (curlist.firstElementChild.dataset.completed === 'false') {
-        curPrev.disabled = false;
-      } else {
-        curPrev.disabled = true;
-      }
-    } else if (cur.className.includes('bin')) {
-      listFuns.delList(curIdx, lis);
-      listFuns.showList(lis, todoEl);
+  if (cur.className.includes('more')) {
+    curlist.style.background = '#F8EDE3';
+    cur.src = './assets/img/bin.svg';
+    cur.className = 'bin';
+    if (curlist.firstElementChild.dataset.completed === 'false') {
+      curPrev.disabled = false;
+    } else {
+      curPrev.disabled = true;
     }
+  } else if (cur.className.includes('bin')) {
+    Lists.delList(curIdx, lis);
+    Lists.showList(lis, todoEl);
+  }
 
-    if (curlist.lastElementChild.className === 'bin') {
-      if (cur.className === 'todo-text') {
-        curlist.addEventListener('focusout', () => {
-          textnormal(cur);
-        });
-      }
+  if (curlist.lastElementChild.className === 'bin') {
+    if (cur.className === 'todo-text') {
+      curlist.addEventListener('focusout', () => {
+        textnormal(cur);
+      });
     }
-  });
-};
-
-removeTodo();
+  }
+});
 
 // edit
 const editTodo = () => {
   const todoEl = document.querySelector('.todo-list');
   const todoTexts = todoEl.querySelectorAll('.todo-text');
+  const tdlist = listFuns.tdlists;
   todoTexts.forEach((text, idx) => {
     text.onchange = () => {
-      listFuns.edit(text.value, idx);
+      Lists.edit(text.value, idx, tdlist);
     };
 
     text.addEventListener('keydown', (e) => {
@@ -91,52 +88,59 @@ todoEl.addEventListener('click', (e) => {
   const cur = e.target;
   const curlist = cur.parentElement;
   const curIdx = Array.from(todoEl.childNodes).indexOf(curlist);
-
   if (cur.className === 'check-box') {
     listFuns.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
+    const tdlist = listFuns.tdlists;
     if (
-      listFuns.tdlists[curIdx].completed === false
+      tdlist[curIdx].completed === false
       && cur.dataset.completed === 'false'
     ) {
-      listFuns.check(cur, curIdx);
+      Lists.check(cur, curIdx, tdlist);
     } else if (
-      listFuns.tdlists[curIdx].completed === true
+      tdlist[curIdx].completed === true
       && cur.dataset.completed === 'true'
     ) {
-      listFuns.uncheck(cur, curIdx);
+      Lists.uncheck(cur, curIdx, tdlist);
     }
   }
-  displaycheck();
-});
 
-const todoInput = document.querySelector('.todo-input');
-
-const submitTodo = () => {
-  const lis = listFuns.tdlists;
-  todoInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === 'Tab') {
-      listFuns.storeLocal(todoInput.value);
-      todoInput.value = '';
-      listFuns.showList(lis, todoEl);
-    }
-    displaycheck();
-    editTodo();
-  });
-};
-
-window.addEventListener('load', () => {
-  const lis = listFuns.tdlists;
-  listFuns.showList(lis, todoEl);
-  submitTodo();
-  editTodo();
   displaycheck();
 });
 
 // clearcompleted
 const clearBtn = document.querySelector('.clear');
+const clearAllChecked = () => {
+  clearBtn.addEventListener('click', () => {
+    const lis = listFuns.tdlists;
+    Lists.clearCompleted(lis);
+    listFuns.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
+    Lists.showList(listFuns.tdlists, todoEl);
+  });
+};
 
-clearBtn.addEventListener('click', () => {
-  listFuns.clearCompleted();
+clearAllChecked();
+
+const todoInput = document.querySelector('.todo-input');
+
+const submitTodo = () => {
+  listFuns.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
+  // const lis = listFuns.tdlists;
+  todoInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === 'Tab') {
+      listFuns.storeLocal(todoInput.value);
+      todoInput.value = '';
+      Lists.showList(listFuns.tdlists, todoEl);
+    }
+    displaycheck();
+    editTodo();
+    clearAllChecked();
+  });
+};
+
+window.addEventListener('load', () => {
   const lis = listFuns.tdlists;
-  listFuns.showList(lis, todoEl);
+  Lists.showList(lis, todoEl);
+  submitTodo();
+  editTodo();
+  displaycheck();
 });

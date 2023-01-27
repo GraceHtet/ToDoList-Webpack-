@@ -1,10 +1,9 @@
 export default class Lists {
-  /* eslint-disable class-methods-use-this */
   constructor() {
     this.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
   }
 
-  delList(idx, lis) {
+  static delList(idx, lis) {
     const tdIdx = lis[idx].index;
     lis.splice(tdIdx - 1, 1);
     lis.forEach((tdlist, tdnum) => {
@@ -14,7 +13,7 @@ export default class Lists {
     localStorage.setItem('tdlists', JSON.stringify(lis));
   }
 
-  showList(lis, els) {
+  static showList(lis, els) {
     els.innerHTML = '';
     lis.forEach((tdlist) => {
       const lists = document.createElement('div');
@@ -51,33 +50,28 @@ export default class Lists {
     localStorage.setItem('tdlists', JSON.stringify(this.tdlists));
   }
 
-  edit(val, idx) {
-    this.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
-    this.tdlists[idx].description = val;
-    localStorage.setItem('tdlists', JSON.stringify(this.tdlists));
-    this.showList();
+  static edit(val, idx, tdlist) {
+    tdlist[idx].description = val;
+    localStorage.setItem('tdlists', JSON.stringify(tdlist));
   }
 
-  check(item, idx) {
-    this.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
-    this.tdlists[idx].completed = true;
-    item.dataset.completed = this.tdlists[idx].completed;
-    localStorage.setItem('tdlists', JSON.stringify(this.tdlists));
+  static check(item, idx, tdlist) {
+    tdlist[idx].completed = true;
+    item.dataset.completed = tdlist[idx].completed;
+    localStorage.setItem('tdlists', JSON.stringify(tdlist));
   }
 
-  uncheck(item, idx) {
-    this.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
-    this.tdlists[idx].completed = false;
-    item.dataset.completed = this.tdlists[idx].completed;
-    localStorage.setItem('tdlists', JSON.stringify(this.tdlists));
+  static uncheck(item, idx, tdlist) {
+    tdlist[idx].completed = false;
+    item.dataset.completed = tdlist[idx].completed;
+    localStorage.setItem('tdlists', JSON.stringify(tdlist));
   }
 
-  clearCompleted() {
-    this.tdlists = JSON.parse(localStorage.getItem('tdlists')) || [];
-    this.tdlists = this.tdlists.filter((tdlist) => tdlist.completed === false);
-    this.tdlists.forEach((tdlist, tdnum) => {
+  static clearCompleted(lis) {
+    lis = lis.filter((tdlist) => tdlist.completed === false);
+    lis.forEach((tdlist, tdnum) => {
       tdlist.index = tdnum + 1;
     });
-    localStorage.setItem('tdlists', JSON.stringify(this.tdlists));
+    localStorage.setItem('tdlists', JSON.stringify(lis));
   }
 }
