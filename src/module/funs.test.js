@@ -3,8 +3,6 @@
  */
 import Lists from './listFuns.js';
 
-const listFuns = new Lists();
-
 document.body.innerHTML = `
     <section id="todo" class="todo">
       <div>
@@ -34,19 +32,67 @@ const tasks = [
     completed: false,
     index: 1,
   },
+  {
+    description: 'task2',
+    completed: false,
+    index: 2,
+  },
 ];
 
 describe('Test', () => {
   test('Add one item to the list', () => {
-    listFuns.showList(tasks, todoEl);
+    Lists.showList(tasks, todoEl);
+    const li = todoEl.querySelectorAll('.lists');
+    expect(li).toHaveLength(2);
+  });
+
+  test('Remove one item from the list', () => {
+    Lists.delList(0, tasks);
+    Lists.showList(tasks, todoEl);
     const li = todoEl.querySelectorAll('.lists');
     expect(li).toHaveLength(1);
   });
 
-  test('Remove one item to the list', () => {
-    listFuns.delList(0, tasks);
-    listFuns.showList(tasks, todoEl);
+  test('Edit an item on the list', () => {
+    Lists.edit('Edit Task', 0, tasks);
+    Lists.showList(tasks, todoEl);
+    const tdtext = document.querySelectorAll('.todo-text');
+    expect(JSON.parse(localStorage.getItem('tdlists'))[0].description).toMatch(
+      'Edit Task',
+    );
+    expect(tdtext[0].value).toMatch('Edit Task');
+  });
+
+  test('Check an item on the list', () => {
     const li = todoEl.querySelectorAll('.lists');
-    expect(li).toHaveLength(0);
+    Lists.check(li[0], 0, tasks);
+    Lists.showList(tasks, todoEl);
+
+    const checkbox = document.querySelectorAll('.check-box');
+    expect(
+      JSON.parse(localStorage.getItem('tdlists'))[0].completed,
+    ).toBeTruthy();
+    expect(checkbox[0].dataset.completed).toBeTruthy();
+  });
+
+  test('Clear All completed items from the list', () => {
+    let tasks = [
+      {
+        description: 'task1',
+        completed: false,
+        index: 1,
+      },
+      {
+        description: 'task2',
+        completed: true,
+        index: 2,
+      },
+    ];
+    Lists.clearCompleted(tasks);
+    tasks = JSON.parse(localStorage.getItem('tdlists'));
+    Lists.showList(tasks, todoEl);
+    const li = todoEl.querySelectorAll('.lists');
+    expect(JSON.parse(localStorage.getItem('tdlists'))).toHaveLength(1);
+    expect(li).toHaveLength(1);
   });
 });
